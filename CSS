@@ -542,4 +542,93 @@ body {
 }
 
 .footer-note a:hover {
-    text-decoration:
+    text-decoration: underline;
+}
+
+/* Плавная анимация появления */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .main-title {
+        font-size: 3.5rem;
+    }
+    
+    .projects-elegant {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.5rem;
+        letter-spacing: 3px;
+    }
+    
+    .title-subtitle {
+        font-size: 1.4rem;
+    }
+    
+    .projects-elegant {
+        grid-template-columns: 1fr;
+    }
+    
+    .email-elegant {
+        font-size: 1.8rem;
+        padding: 20px 30px;
+    }
+    
+    .footer-stats {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .contact-elegant {
+        padding: 50px 30px;
+    }
+    
+    .values-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .value-item {
+        width: 100%;
+        max-width: 300px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .elegant-container {
+        padding: 30px 15px;
+    }
+    
+    .main-title {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+    
+    .project-card-elegant {
+        padding: 25px;
+    }
+    
+    .project-name-elegant {
+        font-size: 1.5rem;
+    }
+    
+    .email-elegant {
+        font-size: 1.4rem;
+        padding: 15px 25px;
+    }
+}
