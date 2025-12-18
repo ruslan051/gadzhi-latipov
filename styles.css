@@ -14,7 +14,13 @@
     --grid-color: rgba(0, 224, 255, 0.1);
     --glow-blue: 0 0 20px rgba(0, 224, 255, 0.7);
     --glow-purple: 0 0 20px rgba(170, 0, 255, 0.5);
+    --font-heading: 'Orbitron', sans-serif;
+    --font-body: 'Rajdhani', sans-serif;
+    --font-secondary: 'Exo 2', sans-serif;
+
+    
 }
+
 
 * {
     margin: 0;
@@ -93,7 +99,7 @@ body {
 }
 
 .main-title {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-heading);
     font-size: 4.5rem;
     font-weight: 800;
     margin-bottom: 30px;
@@ -656,6 +662,10 @@ body {
 
 /* Описание */
 .project-desc-elegant {
+.project-desc-elegant, .intro-text {
+    font-family: var(--font-body);
+    font-weight: 400;
+}
     color: var(--text-grey);
     line-height: 1.8;
     margin-bottom: 35px;
@@ -756,7 +766,9 @@ body {
     font-weight: 600;
 }
 
-.contact-subtitle {
+.contact-subtitle, .footer-text {
+    font-family: var(--font-secondary);
+
     color: var(--text-grey);
     font-size: 1.2rem;
     max-width: 700px;
