@@ -249,3 +249,28 @@ window.addEventListener('load', function() {
         }, index * 200);
     });
 });
+
+// Анимированный текст внаачле 
+document.addEventListener('DOMContentLoaded', function() {
+    const elements = document.querySelectorAll('[data-text]');
+    
+    elements.forEach(element => {
+        const text = element.getAttribute('data-text');
+        let index = 0;
+        const speed = 50;
+        
+        function type() {
+            if (index < text.length) {
+                element.textContent += text.charAt(index);
+                index++;
+                setTimeout(type, speed);
+            } else {
+                element.style.borderRight = 'none';
+            }
+        }
+        
+        // Начинаем печать через секунду
+        setTimeout(type, 1000);
+    });
+});
+

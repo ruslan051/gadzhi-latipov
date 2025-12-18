@@ -1130,3 +1130,71 @@ body {
     20% { transform: translateX(1px); }
     30% { transform: translateX(0); }
 }
+.simple-typewriter h2 {
+    color: #00ffaa;
+    font-family: monospace;
+    font-size: 1.8rem;
+    line-height: 1.6;
+    border-right: .15em solid #00ffaa;
+    letter-spacing: .15em;
+    word-wrap: break-word;
+    white-space: pre-wrap; /* Важно для переноса строк */
+    overflow: hidden;
+    min-height: 150px;
+    padding-right: 5px;
+}
+.pulse-text {
+    color: #00ff77;
+    font-size: 1.0rem;
+    font-weight: 700;
+    font-family: 'Rajdhani', sans-serif;
+    text-transform: uppercase;
+    animation: pulse 2s infinite;
+    text-align: center;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        text-shadow: 0 0 10px rgba(5, 255, 234, 0.7);
+    }
+    50% {
+        transform: scale(1.05);
+        text-shadow: 
+            0 0 20px rgba(4, 0, 254, 0.9),
+            0 0 30px rgba(160, 152, 228, 0.7),
+            0 0 40px rgba(181, 170, 236, 0.5);
+    }
+    100% {
+        transform: scale(1);
+        text-shadow: 0 0 10px rgba(255, 170, 0, 0.7);
+    }
+}
+
+
+.gradient-text {
+    background: linear-gradient(90deg, 
+        #00e0ff, 
+        #0088ff, 
+        #aa00ff, 
+        #ff00aa,
+        #ffaa00,
+        #00ffaa);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-size: 1.0rem;
+    font-weight: 800;
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    animation: gradient-flow 3s ease infinite;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
