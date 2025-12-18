@@ -1,0 +1,545 @@
+:root {
+    --primary-blue: #00e0ff;
+    --secondary-blue: #0088ff;
+    --accent-purple: #aa00ff;
+    --dark-bg: #0a0a14;
+    --darker-bg: #05050a;
+    --card-bg: rgba(16, 16, 32, 0.85);
+    --text-white: #ffffff;
+    --text-grey: #cccccc;
+    --grid-color: rgba(0, 224, 255, 0.1);
+    --glow-blue: 0 0 20px rgba(0, 224, 255, 0.7);
+    --glow-purple: 0 0 20px rgba(170, 0, 255, 0.5);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--dark-bg);
+    color: var(--text-white);
+    font-family: 'Exo 2', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Элегантная сетка на фоне */
+.elegant-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px),
+        linear-gradient(var(--grid-color) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: -1;
+    opacity: 0.15;
+}
+
+/* Тонкие линии движения */
+.scan-line {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
+    z-index: 999;
+    animation: scanMove 8s linear infinite;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+@keyframes scanMove {
+    0% { top: 0; }
+    100% { top: 100%; }
+}
+
+/* Главный контейнер */
+.elegant-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 30px;
+}
+
+/* Заголовок */
+.elegant-header {
+    text-align: center;
+    margin-bottom: 80px;
+    padding: 60px 0;
+    position: relative;
+}
+
+.header-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(0, 136, 255, 0.1) 0%, transparent 50%);
+    z-index: -1;
+}
+
+.main-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 4.5rem;
+    font-weight: 800;
+    margin-bottom: 30px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    position: relative;
+    text-align: center;
+}
+
+/* Анимация заголовка */
+.title-pulse-glitch {
+    color: #00e0ff;
+    animation: 
+        neonPulse 3s ease-in-out infinite alternate,
+        glitchShift 5s infinite;
+    position: relative;
+    display: inline-block;
+}
+
+.title-pulse-glitch::before,
+.title-pulse-glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+}
+
+.title-pulse-glitch::before {
+    color: #0088ff;
+    z-index: -1;
+    animation: glitch-top 4s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+.title-pulse-glitch::after {
+    color: #aa00ff;
+    z-index: -2;
+    animation: glitch-bottom 3s infinite;
+    clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+@keyframes neonPulse {
+    0% {
+        text-shadow: 
+            0 0 10px #00e0ff,
+            0 0 20px #00e0ff;
+        opacity: 0.9;
+    }
+    100% {
+        text-shadow: 
+            0 0 20px #00e0ff,
+            0 0 40px #00e0ff,
+            0 0 60px #0088ff;
+        opacity: 1;
+    }
+}
+
+@keyframes glitchShift {
+    0%, 100% { transform: translateX(0); }
+    10% { transform: translateX(-1px); }
+    20% { transform: translateX(1px); }
+    30% { transform: translateX(-0.5px); }
+    40% { transform: translateX(0.5px); }
+    50% { transform: translateX(-1px); }
+    60% { transform: translateX(1px); }
+    70% { transform: translateX(-0.5px); }
+    80% { transform: translateX(0.5px); }
+    90% { transform: translateX(-1px); }
+}
+
+@keyframes glitch-top {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+
+@keyframes glitch-bottom {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(2px); }
+}
+
+.title-subtitle {
+    font-size: 1.8rem;
+    color: var(--text-grey);
+    font-weight: 300;
+    letter-spacing: 4px;
+    margin-bottom: 40px;
+}
+
+.title-divider {
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
+    margin: 0 auto 40px;
+}
+
+/* Вступительный текст */
+.intro-text {
+    max-width: 800px;
+    margin: 0 auto 50px;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--text-grey);
+}
+
+/* Подход к делу */
+.approach-section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.approach-title {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--primary-blue);
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.values-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.value-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(0, 224, 255, 0.1);
+    border: 1px solid rgba(0, 224, 255, 0.3);
+    padding: 15px 25px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+.value-item i {
+    color: var(--primary-blue);
+    font-size: 1.3rem;
+}
+
+.recruitment-call {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-grey);
+    line-height: 1.8;
+    margin-top: 30px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(0, 224, 255, 0.2);
+}
+
+/* Секция проектов */
+.section-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    text-align: center;
+    margin-bottom: 60px;
+    letter-spacing: 3px;
+}
+
+/* Проектная сетка */
+.projects-elegant {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 40px;
+    margin-bottom: 120px;
+}
+
+/* Карточка проекта - элегантная и минималистичная */
+.project-card-elegant {
+    background: var(--card-bg);
+    border: 1px solid rgba(0, 224, 255, 0.2);
+    border-radius: 2px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    backdrop-filter: blur(10px);
+}
+
+.project-card-elegant::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-blue), transparent);
+    transition: left 0.6s;
+}
+
+.project-card-elegant:hover::before {
+    left: 100%;
+}
+
+.project-card-elegant:hover {
+    border-color: var(--primary-blue);
+    box-shadow: var(--glow-blue);
+    transform: translateY(-10px);
+}
+
+/* Индикатор проекта */
+.project-indicator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.project-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: var(--primary-blue);
+    letter-spacing: 2px;
+    margin-right: 15px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--primary-blue);
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+}
+
+.status-dot::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 1px solid var(--primary-blue);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Название проекта */
+.project-name-elegant {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    color: var(--text-white);
+    margin-bottom: 25px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+/* Описание */
+.project-desc-elegant {
+    color: var(--text-grey);
+    line-height: 1.8;
+    margin-bottom: 35px;
+    font-size: 1.05rem;
+    font-weight: 300;
+}
+
+/* Статус проекта */
+.project-status {
+    display: inline-block;
+    background: rgba(0, 224, 255, 0.1);
+    color: var(--primary-blue);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* Панель требований */
+.requirements-elegant {
+    background: rgba(0, 0, 20, 0.4);
+    padding: 25px;
+    border-left: 3px solid var(--secondary-blue);
+}
+
+.req-title-elegant {
+    color: var(--secondary-blue);
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skill-chip {
+    background: rgba(0, 136, 255, 0.1);
+    border: 1px solid rgba(0, 136, 255, 0.3);
+    color: var(--primary-blue);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: all 0.3s;
+}
+
+.skill-chip:hover {
+    background: rgba(0, 136, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* Контактная секция */
+.contact-elegant {
+    background: linear-gradient(135deg, rgba(0, 17, 34, 0.9), rgba(10, 10, 30, 0.9));
+    border: 1px solid rgba(0, 224, 255, 0.3);
+    border-radius: 2px;
+    padding: 80px 60px;
+    text-align: center;
+    margin: 100px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-elegant::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(0, 224, 255, 0.05), transparent);
+    z-index: -1;
+}
+
+.contact-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    color: var(--text-white);
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.contact-subtitle {
+    color: var(--text-grey);
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto 50px;
+    line-height: 1.8;
+}
+
+.email-elegant {
+    display: inline-block;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem;
+    color: var(--primary-blue);
+    text-decoration: none;
+    padding: 25px 50px;
+    margin: 40px 0;
+    border: 2px solid var(--primary-blue);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s;
+    letter-spacing: 2px;
+}
+
+.email-elegant::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 224, 255, 0.2), transparent);
+    transition: left 0.7s;
+}
+
+.email-elegant:hover::before {
+    left: 100%;
+}
+
+.email-elegant:hover {
+    background: rgba(0, 224, 255, 0.1);
+    box-shadow: var(--glow-blue);
+    letter-spacing: 3px;
+}
+
+.contact-ps {
+    color: var(--text-grey);
+    font-style: italic;
+    margin-top: 60px;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    border-top: 1px solid rgba(0, 224, 255, 0.2);
+    padding-top: 30px;
+}
+
+/* Футер */
+.footer-elegant {
+    background: var(--darker-bg);
+    padding: 60px 0;
+    text-align: center;
+    border-top: 1px solid rgba(0, 224, 255, 0.2);
+}
+
+.footer-stats {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-bottom: 40px;
+}
+
+.footer-stat {
+    font-family: 'Orbitron', sans-serif;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 10px;
+    font-weight: 800;
+}
+
+.stat-label {
+    color: var(--text-grey);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+}
+
+.footer-text {
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Exo 2', sans-serif;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.footer-note {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.9rem;
+}
+
+.footer-note a {
+    color: var(--primary-blue);
+    text-decoration: none;
+}
+
+.footer-note a:hover {
+    text-decoration:
