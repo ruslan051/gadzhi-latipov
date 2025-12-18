@@ -981,3 +981,22 @@ body {
 .full-width-project:hover {
     transform: translateX(5px);
 }
+/* Добавьте в ваш CSS */
+.text-cyberpunk {
+    text-shadow: 
+        0 0 5px currentColor,
+        0 0 10px rgba(0, 224, 255, 0.3);
+    letter-spacing: 0.5px;
+}
+
+.text-glitch {
+    animation: textGlitch 3s infinite;
+    position: relative;
+}
+
+@keyframes textGlitch {
+    0%, 100% { transform: translateX(0); }
+    10% { transform: translateX(-1px); }
+    20% { transform: translateX(1px); }
+    30% { transform: translateX(0); }
+}
