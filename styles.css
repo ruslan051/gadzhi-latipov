@@ -734,6 +734,7 @@ body {
     padding: 30px;
     border-radius: 8px;
     border-left: 3px solid currentColor;
+    border-right: 3px solid currentColor;
     backdrop-filter: blur(15px);
 }
 
