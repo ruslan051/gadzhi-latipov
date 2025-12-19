@@ -250,14 +250,14 @@ window.addEventListener('load', function() {
     });
 });
 
-// Анимированный текст внаачле 
+// Анимированный текст Приветствия  
 document.addEventListener('DOMContentLoaded', function() {
     const elements = document.querySelectorAll('[data-text]');
     
     elements.forEach(element => {
         const text = element.getAttribute('data-text');
         let index = 0;
-        const speed = 50;
+        const speed = 200;
         
         function type() {
             if (index < text.length) {
