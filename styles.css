@@ -1310,29 +1310,6 @@ body {
         }
 
 
-/* Видео метрос */
-.video-background {
-    position: fixed;
-    top: 0;
-    right: 0; /* Позиционируем с правого края */
-    width: 30%; /* Занимаем только половину ширины */
-    height: 100%;
-    z-index: -100;
-    overflow: hidden;
-}
-
-.video-background video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: translate(-50%, -50%);
-    opacity: 0.1; 
-    /* Прозрачность видео (0.7 = 70% видимости) */
-}
-
 
 /* БОКОВАЯ ПАНЕЛЬ БЫСТРОЙ НАВИГАЦИИ */
 .quick-nav {
@@ -1341,13 +1318,13 @@ body {
     top: 50%;
     transform: translateY(-50%);
     width: 280px;
-    background: rgba(10, 10, 20, 0.85);
+    background: rgba(10, 10, 20, 0.95);
     backdrop-filter: blur(15px);
     border: 1px solid rgba(0, 224, 255, 0.15);
     border-radius: 8px;
     padding: 15px;
     z-index: 1000;
-    opacity: 0.2;
+    opacity: 0.3;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
@@ -1362,9 +1339,10 @@ body {
     box-shadow: 
         0 0 30px rgba(0, 224, 255, 0.2),
         0 5px 30px rgba(0, 0, 0, 0.4);
-    background: rgba(10, 10, 20, 0.95);
+    background: rgba(10, 10, 20, 0.98);
 }
 
+/* Полоса прокрутки */
 .quick-nav::-webkit-scrollbar {
     width: 6px;
 }
@@ -1379,6 +1357,7 @@ body {
     border-radius: 3px;
 }
 
+/* Заголовок навигации */
 .nav-header {
     display: flex;
     align-items: center;
@@ -1409,6 +1388,7 @@ body {
     text-shadow: 0 0 10px rgba(0, 224, 255, 0.5);
 }
 
+/* Список навигации */
 .nav-list {
     list-style: none;
     margin: 0;
@@ -1448,19 +1428,21 @@ body {
     50% { opacity: 1; }
 }
 
+/* Ссылки навигации */
 .nav-list a {
     display: block;
-    padding: 10px 12px;
-    color: rgba(255, 255, 255, 0.8);
+    padding: 12px 15px;
+    color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
     font-family: var(--font-body);
     font-size: 0.95rem;
     font-weight: 500;
     letter-spacing: 0.5px;
-    border-radius: 4px;
+    border-radius: 6px;
     transition: all 0.3s;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid transparent;
+    line-height: 1.4;
 }
 
 .nav-list a:hover {
@@ -1468,7 +1450,7 @@ body {
     background: rgba(0, 224, 255, 0.1);
     border-color: rgba(0, 224, 255, 0.2);
     text-shadow: 0 0 8px rgba(0, 224, 255, 0.3);
-    padding-left: 15px;
+    padding-left: 18px;
 }
 
 .nav-list a::before {
@@ -1478,6 +1460,7 @@ body {
     font-weight: bold;
 }
 
+/* Футер навигации */
 .nav-footer {
     margin-top: 15px;
     padding-top: 10px;
@@ -1493,10 +1476,96 @@ body {
     text-transform: uppercase;
 }
 
-/* Адаптивность для навигации */
+/* ===== МОБИЛЬНАЯ ВЕРСИЯ ===== */
+
+/* Кнопка мобильного меню */
+.mobile-nav-toggle {
+    display: none;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+    z-index: 1001;
+    background: rgba(10, 10, 20, 0.95);
+    border: 2px solid var(--primary-blue);
+    color: var(--primary-blue);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 20px rgba(0, 224, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-toggle i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-toggle .fa-times {
+    opacity: 0;
+}
+
+.mobile-nav-toggle.active .fa-bars {
+    opacity: 0;
+}
+
+.mobile-nav-toggle.active .fa-times {
+    opacity: 1;
+}
+
+.mobile-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--accent-red);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: bold;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Мобильное меню */
+.mobile-nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(5px);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.mobile-nav-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+
+/* Планшеты и маленькие ноутбуки */
 @media (max-width: 1400px) {
     .quick-nav {
-        right: 10px;
+        right: 15px;
         width: 250px;
     }
 }
@@ -1504,65 +1573,275 @@ body {
 @media (max-width: 1200px) {
     .quick-nav {
         width: 220px;
-        opacity: 0.1;
+        opacity: 0.2;
     }
     
     .quick-nav:hover {
-        opacity: 0.95;
-    }
-}
-
-@media (max-width: 992px) {
-    .quick-nav {
-        display: none;
-    }
-    
-    .mobile-nav-toggle {
-        display: block;
-        position: fixed;
-        right: 20px;
-        top: 20px;
-        z-index: 1001;
-        background: rgba(10, 10, 20, 0.9);
-        border: 1px solid var(--primary-blue);
-        color: var(--primary-blue);
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-size: 1.5rem;
-        backdrop-filter: blur(10px);
-    }
-}
-
-/* Добавляем ID проектам для навигации */
-.full-width-project {
-    scroll-margin-top: 100px;
-}
-@media (max-width: 992px) {
-    .quick-nav {
-        position: fixed;
-        right: -100%;
-        top: 80px;
-        width: 300px;
-        max-height: calc(100vh - 100px);
-        opacity: 0;
-        transform: none;
-        transition: right 0.3s ease, opacity 0.3s ease;
-    }
-    
-    .quick-nav.active {
-        right: 20px;
         opacity: 1;
     }
 }
 
+/* Мобильные устройства и планшеты */
+@media (max-width: 1024px) {
+    .quick-nav {
+        position: fixed;
+        right: -100%;
+        top: 50%;
+        width: 90%;
+        max-width: 350px;
+        max-height: 80vh;
+        transform: translateY(-50%);
+        opacity: 1;
+        transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 2px solid var(--primary-blue);
+        box-shadow: 0 0 40px rgba(0, 224, 255, 0.3);
+    }
+    
+    .quick-nav.active {
+        right: 20px;
+    }
+    
+    .mobile-nav-toggle {
+        display: flex;
+    }
+}
+
+/* Телефоны */
+@media (max-width: 768px) {
+    .quick-nav {
+        width: 85%;
+        max-width: 320px;
+        max-height: 85vh;
+        padding: 20px 15px;
+    }
+    
+    .nav-header {
+        margin-bottom: 15px;
+    }
+    
+    .nav-title {
+        font-size: 1rem;
+    }
+    
+    .nav-list a {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .mobile-nav-toggle {
+        width: 55px;
+        height: 55px;
+        right: 15px;
+        top: 15px;
+    }
+    
+    .mobile-nav-toggle i {
+        font-size: 1.3rem;
+    }
+    
+    .mobile-badge {
+        width: 22px;
+        height: 22px;
+        font-size: 0.65rem;
+    }
+}
+
+/* Маленькие телефоны */
 @media (max-width: 480px) {
     .quick-nav {
-        width: 280px;
-        right: 10px;
+        width: 90%;
+        right: 5%;
+        max-width: none;
+        border-radius: 12px;
+    }
+    
+    .nav-list a {
+        font-size: 0.85rem;
+        padding: 12px 15px;
+    }
+    
+    .nav-list a::before {
+        content: '•';
+        margin-right: 10px;
+    }
+    
+    .mobile-nav-toggle {
+        width: 50px;
+        height: 50px;
+        right: 15px;
+        top: 15px;
+    }
+}
+
+/* Очень маленькие телефоны */
+@media (max-width: 360px) {
+    .quick-nav {
+        width: 95%;
+        right: 2.5%;
+        padding: 15px 12px;
+    }
+    
+    .nav-title {
+        font-size: 0.9rem;
+    }
+    
+    .nav-list a {
+        font-size: 0.8rem;
+        padding: 10px 12px;
+    }
+    
+    .mobile-nav-toggle {
+        width: 48px;
+        height: 48px;
+        right: 12px;
+        top: 12px;
+    }
+}
+
+/* Портретный режим телефонов */
+@media (max-width: 768px) and (orientation: portrait) {
+    .quick-nav {
+        max-height: 75vh;
+    }
+}
+
+/* Ландшафтный режим телефонов */
+@media (max-width: 768px) and (orientation: landscape) {
+    .quick-nav {
+        max-height: 85vh;
+        width: 70%;
+        max-width: 400px;
+    }
+    
+    .nav-list a {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Обновляем существующие медиа-запросы */
+
+@media (max-width: 768px) {
+    /* Общие стили */
+    body {
+        font-size: 14px;
+    }
+    
+    /* Заголовок */
+    .main-title {
+        font-size: 1.8rem;
+        letter-spacing: 2px;
+        margin-bottom: 20px;
+    }
+    
+    /* Проекты */
+    .full-width-project {
+        padding: 40px 15px !important;
+        margin-bottom: 10px;
+        scroll-margin-top: 80px;
+    }
+    
+    .project-name-elegant {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+    }
+    
+    .project-desc-elegant {
+        font-size: 1rem;
+        padding: 0 5px;
+        margin-bottom: 20px;
+    }
+    
+    .skills-container {
+        gap: 8px;
+    }
+    
+    .skill-chip {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+    
+    /* Контакты */
+    .contact-elegant {
+        padding: 40px 20px;
+        margin: 50px auto;
+        width: calc(100% - 30px);
+    }
+    
+    .contact-title {
+        font-size: 1.5rem;
+    }
+    
+    .email-elegant {
+        font-size: 1.2rem;
+        padding: 15px 25px;
+        word-break: break-all;
+    }
+    
+    /* Приветствие */
+    .greeting-line {
+        font-size: 1.2rem;
+        padding-left: 15px;
+    }
+    
+    .approach-title {
+        font-size: 1.2rem;
+    }
+    
+    .value-item {
+        padding: 12px 15px;
+        font-size: 1rem;
+    }
+    
+    /* Футер */
+    .gradient-text {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        line-height: 1.5;
+        text-align: center;
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Еще более компактные стили */
+    .main-title {
+        font-size: 1.5rem;
+        letter-spacing: 1px;
+    }
+    
+    .full-width-project {
+        padding: 30px 10px !important;
+    }
+    
+    .project-name-elegant {
+        font-size: 1.1rem;
+    }
+    
+    .project-desc-elegant {
+        font-size: 0.95rem;
+    }
+    
+    .skills-container {
+        justify-content: center;
+    }
+    
+    .skill-chip {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+    
+    .project-status {
+        width: 90%;
+        font-size: 0.9rem;
+        padding: 6px 15px;
+    }
+    
+    .greeting-line {
+        font-size: 1rem;
+    }
+    
+    .pulse-text {
+        font-size: 0.8rem;
     }
 }

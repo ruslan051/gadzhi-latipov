@@ -378,24 +378,258 @@ window.addEventListener('load', function() {
     }, 1000);
 });
 
-// Для мобильных устройств
-function initMobileNav() {
-    if (window.innerWidth <= 992) {
-        const mobileToggle = document.createElement('div');
-        mobileToggle.className = 'mobile-nav-toggle';
-        mobileToggle.innerHTML = '☰';
-        document.body.appendChild(mobileToggle);
+// ===== МОБИЛЬНАЯ НАВИГАЦИЯ =====
+const mobileToggle = document.createElement('div');
+mobileToggle.className = 'mobile-nav-toggle';
+mobileToggle.innerHTML = `
+    <i class="fas fa-bars"></i>
+    <i class="fas fa-times"></i>
+    <span class="mobile-badge">${projects.length}</span>
+`;
+
+const mobileOverlay = document.createElement('div');
+mobileOverlay.className = 'mobile-nav-overlay';
+
+document.body.appendChild(mobileToggle);
+document.body.appendChild(mobileOverlay);
+
+// Переключение мобильного меню
+mobileToggle.addEventListener('click', function(e) {
+    e.stopPropagation();
+    this.classList.toggle('active');
+    quickNav.classList.toggle('active');
+    mobileOverlay.classList.toggle('active');
+    
+    // Анимация кнопки
+    if (this.classList.contains('active')) {
+        this.style.transform = 'rotate(90deg) scale(0.95)';
+        this.style.background = 'rgba(0, 224, 255, 0.15)';
+    } else {
+        this.style.transform = 'rotate(0) scale(1)';
+        this.style.background = 'rgba(10, 10, 20, 0.95)';
+    }
+});
+
+// Закрытие меню по клику на оверлей
+mobileOverlay.addEventListener('click', function() {
+    mobileToggle.classList.remove('active');
+    quickNav.classList.remove('active');
+    this.classList.remove('active');
+    mobileToggle.style.transform = 'rotate(0) scale(1)';
+    mobileToggle.style.background = 'rgba(10, 10, 20, 0.95)';
+});
+
+// Закрытие меню по клику на ссылку
+navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+        if (window.innerWidth <= 1024) {
+            mobileToggle.classList.remove('active');
+            quickNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            mobileToggle.style.transform = 'rotate(0) scale(1)';
+            mobileToggle.style.background = 'rgba(10, 10, 20, 0.95)';
+        }
+    });
+});
+
+// Закрытие меню по свайпу (для мобильных)
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', function(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    const swipeThreshold = 100;
+    const swipeDistance = touchEndX - touchStartX;
+    
+    // Свайп вправо закрывает меню
+    if (swipeDistance > swipeThreshold && quickNav.classList.contains('active')) {
+        mobileToggle.classList.remove('active');
+        quickNav.classList.remove('active');
+        mobileOverlay.classList.remove('active');
+    }
+}
+
+// Адаптивное поведение для разных устройств
+function checkViewport() {
+    const isMobile = window.innerWidth <= 1024;
+    
+    if (isMobile) {
+        // Для мобильных: скрываем навигацию по умолчанию
+        quickNav.style.display = 'none';
+        quickNav.classList.remove('active');
+        mobileToggle.style.display = 'flex';
         
-        mobileToggle.addEventListener('click', function() {
-            quickNav.style.display = quickNav.style.display === 'block' ? 'none' : 'block';
-            quickNav.style.opacity = '1';
-            quickNav.style.right = '20px';
-            quickNav.style.top = '80px';
-            quickNav.style.transform = 'none';
-            quickNav.style.maxHeight = 'calc(100vh - 100px)';
+        // Убираем эффект hover для мобильных
+        quickNav.style.opacity = '1';
+        quickNav.style.transform = 'translateY(-50%)';
+        
+        // Увеличиваем отступы для touch
+        navLinks.forEach(link => {
+            link.style.padding = '15px 20px';
+            link.style.marginBottom = '5px';
+        });
+    } else {
+        // Для десктопов: показываем навигацию
+        quickNav.style.display = 'block';
+        mobileToggle.style.display = 'none';
+        mobileOverlay.style.display = 'none';
+        
+        // Возвращаем desktop эффекты
+        quickNav.style.opacity = '0.3';
+        quickNav.style.transform = 'translateY(-50%)';
+        
+        navLinks.forEach(link => {
+            link.style.padding = '12px 15px';
+            link.style.marginBottom = '8px';
         });
     }
 }
 
+// Проверяем при загрузке и изменении размера
+checkViewport();
+window.addEventListener('resize', checkViewport);
+
+// Отключаем параллакс на мобильных для производительности
+function optimizeForMobile() {
+    if (window.innerWidth <= 768) {
+        // Упрощаем анимации для мобильных
+        const grid = document.querySelector('.elegant-grid');
+        if (grid) {
+            grid.style.animation = 'none';
+            grid.style.transform = 'none';
+        }
+        
+        // Уменьшаем сложные фоны проектов
+        projects.forEach(project => {
+            const beforeElement = project.querySelector(':before');
+            if (beforeElement) {
+                project.style.animation = 'none';
+            }
+        });
+    }
+}
+
+// Инициализация оптимизаций
+optimizeForMobile();
+window.addEventListener('resize', optimizeForMobile);
+
+// Улучшенное определение активного проекта для мобильных
+function updateActiveNavMobile() {
+    const scrollPosition = window.scrollY + 100; // Смещение для мобильных
+    
+    let currentActive = null;
+    let minDistance = Infinity;
+    
+    projects.forEach(project => {
+        const projectTop = project.offsetTop;
+        const projectCenter = projectTop + project.offsetHeight / 3;
+        const distance = Math.abs(scrollPosition - projectCenter);
+        
+        if (distance < minDistance) {
+            minDistance = distance;
+            currentActive = project.id;
+        }
+    });
+    
+    // Обновляем активную ссылку
+    navLinks.forEach(link => {
+        link.parentElement.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentActive}`) {
+            link.parentElement.classList.add('active');
+            
+            // Прокручиваем активный элемент в вид навигации (для мобильных)
+            if (quickNav.classList.contains('active')) {
+                link.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+            }
+        }
+    });
+}
+
+// Обновляем функцию скролла
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    
+    if (window.innerWidth <= 1024) {
+        // Для мобильных: более частое обновление
+        updateActiveNavMobile();
+    } else {
+        // Для десктопов: стандартное обновление
+        scrollTimeout = setTimeout(updateActiveNav, 100);
+    }
+}, { passive: true });
+
+// Добавляем вибрацию для мобильных (опционально)
+if ('vibrate' in navigator && window.innerWidth <= 1024) {
+    mobileToggle.addEventListener('click', function() {
+        navigator.vibrate(10);
+    });
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navigator.vibrate(5);
+        });
+    });
+}
+
+// Предотвращаем зум при двойном тапе
+let lastTouchEnd = 0;
+document.addEventListener('touchend', function(event) {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+    }
+    lastTouchEnd = now;
+}, { passive: false });
+
+// Адаптивные отступы для проектов на мобильных
+function adjustProjectSpacing() {
+    if (window.innerWidth <= 768) {
+        projects.forEach(project => {
+            project.style.padding = '40px 15px';
+            project.style.marginBottom = '10px';
+            project.style.scrollMarginTop = '80px'; // Для мобильной навигации
+        });
+    }
+}
+
+adjustProjectSpacing();
+window.addEventListener('resize', adjustProjectSpacing);
+
+// Ленивая загрузка для мобильных (улучшение производительности)
+if ('IntersectionObserver' in window && window.innerWidth <= 768) {
+    const lazyObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const project = entry.target;
+                project.style.opacity = '1';
+                project.style.transform = 'translateY(0)';
+                lazyObserver.unobserve(project);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '50px'
+    });
+    
+    // Наблюдаем за проектами
+    projects.forEach(project => {
+        project.style.opacity = '0';
+        project.style.transform = 'translateY(20px)';
+        project.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        lazyObserver.observe(project);
+    });
+}
 initMobileNav();
 window.addEventListener('resize', initMobileNav);
