@@ -274,3 +274,128 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Навигация по проектам
+const quickNav = document.querySelector('.quick-nav');
+const navLinks = document.querySelectorAll('.nav-list a');
+const projects = document.querySelectorAll('.full-width-project');
+
+// Добавляем ID проектам
+projects.forEach((project, index) => {
+    project.id = `project-${index + 1}`;
+});
+
+// Активная навигация при скролле
+function updateActiveNav() {
+    const scrollPosition = window.scrollY + window.innerHeight / 3;
+    
+    let currentActive = null;
+    
+    projects.forEach(project => {
+        const projectTop = project.offsetTop;
+        const projectBottom = projectTop + project.offsetHeight;
+        
+        if (scrollPosition >= projectTop && scrollPosition <= projectBottom) {
+            currentActive = project.id;
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.parentElement.classList.remove('active');
+        if (link.getAttribute('href') === `#${currentActive}`) {
+            link.parentElement.classList.add('active');
+        }
+    });
+}
+
+// Плавный скролл для навигации
+navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: 'smooth'
+            });
+            
+            // Анимация клика
+            this.style.color = '#00ffaa';
+            setTimeout(() => {
+                this.style.color = '';
+            }, 300);
+        }
+    });
+});
+
+// Обновление активной ссылки при скролле
+let navScrollTimeout;
+window.addEventListener('scroll', () => {
+    clearTimeout(navScrollTimeout);
+    navScrollTimeout = setTimeout(updateActiveNav, 50);
+});
+
+// Инициализация
+updateActiveNav();
+
+// Авто-скрытие/показ навигации при скролле
+let lastScrollTop = 0;
+window.addEventListener('scroll', function() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    if (scrollTop > lastScrollTop) {
+        // Скролл вниз
+        quickNav.style.transform = 'translateY(-50%) translateX(20px)';
+        quickNav.style.opacity = '0.1';
+    } else {
+        // Скролл вверх
+        quickNav.style.transform = 'translateY(-50%) translateX(0)';
+        if (!quickNav.matches(':hover')) {
+            quickNav.style.opacity = '0.3';
+        }
+    }
+    
+    lastScrollTop = scrollTop;
+});
+
+// Эффект при наведении на панель
+quickNav.addEventListener('mouseenter', function() {
+    this.style.opacity = '1';
+    this.style.transform = 'translateY(-50%) scale(1.02)';
+});
+
+quickNav.addEventListener('mouseleave', function() {
+    this.style.opacity = '0.3';
+    this.style.transform = 'translateY(-50%)';
+});
+
+// Плавное появление навигации при загрузке
+window.addEventListener('load', function() {
+    setTimeout(() => {
+        quickNav.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        quickNav.style.opacity = '0.3';
+    }, 1000);
+});
+
+// Для мобильных устройств
+function initMobileNav() {
+    if (window.innerWidth <= 992) {
+        const mobileToggle = document.createElement('div');
+        mobileToggle.className = 'mobile-nav-toggle';
+        mobileToggle.innerHTML = '☰';
+        document.body.appendChild(mobileToggle);
+        
+        mobileToggle.addEventListener('click', function() {
+            quickNav.style.display = quickNav.style.display === 'block' ? 'none' : 'block';
+            quickNav.style.opacity = '1';
+            quickNav.style.right = '20px';
+            quickNav.style.top = '80px';
+            quickNav.style.transform = 'none';
+            quickNav.style.maxHeight = 'calc(100vh - 100px)';
+        });
+    }
+}
+
+initMobileNav();
+window.addEventListener('resize', initMobileNav);
