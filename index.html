@@ -331,8 +331,59 @@
                     <p class="project-desc-elegant">
                        Суть проекта -  Веб сервис позволяющий находить попутчиков в метро.
                     </p>
-                    <div class="project-status">Статус готовности: 100% <a href="frommetro.vercel.app/">Ссылка на сервис</a></div>
-                    
+                    <div class="project-status">Статус готовности: 100%</a></div>
+                    <div style="margin: 25px 0; display: flex; justify-content: center;">
+                        <a href="https://frommetro.vercel.app/" 
+                        target="_blank"
+                        style="display: inline-flex;
+                                align-items: center;
+                                gap: 15px;
+                                background: linear-gradient(135deg, #00ff88, #00cc66);
+                                color: white;
+                                padding: 18px 35px;
+                                font-family: 'Orbitron', sans-serif;
+                                font-weight: 700;
+                                font-size: 1.2rem;
+                                letter-spacing: 2px;
+                                text-transform: uppercase;
+                                text-decoration: none;
+                                border-radius: 8px;
+                                border: 2px solid rgba(255, 255, 255, 0.3);
+                                box-shadow: 0 0 30px rgba(0, 255, 136, 0.5);
+                                transition: all 0.3s ease;
+                                position: relative;
+                                overflow: hidden;
+                                backdrop-filter: blur(10px);">
+                            
+                            <i class="fas fa-external-link-alt"></i>
+                            <span>ПЕРЕЙТИ НА САЙТ МЕТРОС</span>
+                            <div style="position: absolute;
+                                top: 0;
+                                left: -100%;
+                                width: 100%;
+                                height: 100%;
+                                background: linear-gradient(90deg, 
+                                        transparent, 
+                                        rgba(255, 255, 255, 0.2), 
+                                        transparent);
+                                transition: left 0.7s;"></div>
+                            </a>
+                        </div>
+
+                        <style>
+                            a:hover {
+                                transform: translateY(-5px) scale(1.05);
+                                box-shadow: 
+                                    0 0 40px rgba(0, 255, 136, 0.7),
+                                    0 10px 40px rgba(0, 0, 0, 0.3);
+                                letter-spacing: 3px;
+                                background: linear-gradient(135deg, #00ffaa, #00ee77);
+                            }
+                            
+                            a:hover div {
+                                left: 100%;
+                            }
+                        </style>
                     
                     <div class="requirements-elegant" style="color: #00ff88;">
                         <div class="req-title-elegant">
@@ -340,8 +391,6 @@
                             Кто нужен:
                         </div>
                         <div class="skills-container">
-                            <span class="skill-chip">PR</span>
-                            <span class="skill-chip">SMM</span>
                             <span class="skill-chip">маркетолог</span>
                         </div>
                     </div>
